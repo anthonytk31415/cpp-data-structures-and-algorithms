@@ -2,34 +2,33 @@
 #include <vector>
 #include <algorithm>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
-// https://leetcode.com/problems/find-the-difference-of-two-arrays/description/?envType=study-plan-v2&envId=leetcode-75
-// 2215. Find the Difference of Two Arrays
+// https://leetcode.com/problems/unique-number-of-occurrences/?envType=study-plan-v2&envId=leetcode-75
+// 1207. Unique Number of Occurrences
 
 class Solution {
-
-vector<int> checkSets(unordered_set<int>& n1, unordered_set<int>& n2){
-    vector<int> res = {}; 
-    for (int x : n1){
-        if (n2.find(x) == n2.end())
-            res.push_back(x);
-    }
-    return res; 
-}
-
 public:
-    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
-        unordered_set<int> n1(nums1.begin(), nums1.end());
-        unordered_set<int> n2(nums2.begin(), nums2.end());
-        vector<int> res1 = checkSets(n1, n2), res2 = checkSets(n2, n1) ; 
-        vector<vector<int>> res = {}; 
-        res.push_back(res1); 
-        res.push_back(res2); 
-        return res;
+    bool uniqueOccurrences(vector<int>& arr) {
+        unordered_set<int> countOccurences = {}; 
+        unordered_map<int, int> counter = {}; 
+        for (int x : arr){
+            counter[x] += 1; 
+        }
+        for (auto &pair : counter){
+            if (countOccurences.find(pair.second) != countOccurences.end())
+                return false; 
+            countOccurences.insert(pair.second); 
+        }
+        return true; 
     }
 };
+
+// for (auto i = mp.begin(); i != mp.end(); i++) {
+//     ans.insert(i->second);
+// }
 
 int main() {
 
