@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <tuple>
+#include <map>
 
 using namespace std;
 
@@ -14,31 +15,25 @@ using namespace std;
 class Solution {
 public:
     int equalPairs(vector<vector<int>>& grid) {
-        unordered_map<long, int> rows = {}; 
-        unordered_map<long, int> cols = {}; 
+        map<vector<int>, int> x = {};
+        unordered_map<string, int> rows = {}, cols = {};
         int res = 0;
         for (int i = 0; i < grid.size(); i ++){
-            long row = 0; 
+            string row = ""; 
             for (int j = 0; j < grid[i].size(); j ++){
-                if (j > 0)
-                    row *= 10; 
-                row += grid[i][j]; 
+                row += to_string(grid[i][j]) + ","; 
             }
             rows[row] += 1; 
         }
-
         for (int j = 0; j < grid[0].size(); j ++){
-            long col = 0; 
+            string col = ""; 
             for (int i = 0; i < grid.size(); i ++){
-                if (i > 0)
-                    col *= 10; 
-                col += grid[i][j]; 
+                col += to_string(grid[i][j]) + ",";
             }
             cols[col] += 1; 
         }
-
         for (auto pair : rows){
-            int row = pair.first; 
+            string row = pair.first; 
             if (cols.find(row) != cols.end()){
                 res += rows[row]*cols[row]; 
             }
