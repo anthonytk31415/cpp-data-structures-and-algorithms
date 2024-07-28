@@ -1,44 +1,64 @@
-// Priority Queue: The C++ STL also provides the std::priority_queue container adapter, which encapsulates a heap. 
+// Priority Queue: The C++ STL also provides the priority_queue container adapter, which encapsulates a heap. 
 // By default, it is a max-heap, but you can make it a min-heap by providing a custom comparator.
 
-// Here's an example of using std::priority_queue:
+// Here's an example of using priority_queue:
 
 #include <queue>
 #include <vector>
 #include <iostream>
 
-int main() {
-    std::priority_queue<int> pq;
+using namespace std; 
 
-    // Add elements to the priority queue
-    pq.push(3);
-    pq.push(1);
-    pq.push(4);
-    pq.push(1);
-    pq.push(5);
 
-    // Display and remove elements from the priority queue
-    std::cout << "Priority Queue: ";
+
+// priority_queue<element type, container type, comparator type> pq<comparetype>; 
+
+// implements priority queue by int; default: highest elements on top
+void basicPQ() {
+    cout << "basic priority queue" << endl;
+    priority_queue<int> pq = {}; 
+    vector<int> elements = {2,1,3,9,5,4}; 
+    for (auto &element: elements){
+        pq.push(element); 
+    }
     while (!pq.empty()) {
-        std::cout << pq.top() << ' ';
-        pq.pop();
+        cout << pq.top() << ", "; 
+        pq.pop();         
     }
-    std::cout << '\n';
+    cout << endl;     
+}
 
-    // Min-heap example
-    std::priority_queue<int, std::vector<int>, std::greater<int>> min_pq;
-    min_pq.push(3);
-    min_pq.push(1);
-    min_pq.push(4);
-    min_pq.push(1);
-    min_pq.push(5);
 
-    std::cout << "Min-heap Priority Queue: ";
-    while (!min_pq.empty()) {
-        std::cout << min_pq.top() << ' ';
-        min_pq.pop();
+// complare descending a[0], then descending a[1]
+auto compare = [](const vector <int>&a, const vector<int> &b) {
+    if (a[0] != b[0]){
+        return a[0] > b[0]; 
     }
-    std::cout << '\n';
+    return a[1] > b[1]; 
+};
 
+
+// note pq reverses the order of complare since it does descending order. 
+void customPQ(){
+    cout << "custom priority queue" << endl;
+    priority_queue<vector<int>, vector<vector<int>>, decltype(compare)> pq(compare);
+    vector<vector<int>> elements = {{3, 1}, {3, 0}, {2, 3}, {1,1}, {2, 9}}; 
+    // Add elements to the priority queue
+    for (auto &element : elements){
+        pq.push(element);        
+    }
+    // Display and remove elements from the priority queue
+    cout << "Priority Queue: ";    
+    while (!pq.empty()) {
+        vector<int> x = pq.top(); 
+        cout << x[0] << "," << x[1] << "; ";
+        pq.pop(); 
+    }
+    cout << endl;
+}
+
+int main() {
+    basicPQ(); 
+    customPQ(); 
     return 0;
 }
