@@ -4,7 +4,6 @@
 using namespace std; 
 
 int cost(string &w1, string &w2, int i, int j) {
-    
     if (i-1 >= w1.size() || j-1 >= w2.size()){
         return 1;
     }
@@ -39,8 +38,7 @@ int edit_distance(string w1, string w2){
             dp(w1, w2, i, j, memo); 
         }
     }
-
-    return memo[memo.size()-1][memo[0].size()-1]; 
+    return memo[m][n]; 
 }
 
 
